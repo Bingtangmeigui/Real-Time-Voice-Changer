@@ -1,0 +1,245 @@
+#N canvas 0 37 1470 822 10;
+#X obj 630 310 adc~;
+#X obj 227 517 env~;
+#X floatatom 227 565 5 0 0 0 - - -, f 5;
+#X obj 227 541 spigot;
+#X obj 290 518 tgl 15 0 empty empty empty 17 7 0 10 #fcfcfc #000000
+#000000 0 1;
+#X text 320 518 <- Click to get amplitude of channel 1;
+#X text 270 565 RMS amplitude (dB);
+#X floatatom 217 719 0 0 0 0 - - -;
+#X obj 280 950 *~;
+#X obj 406 882 line~;
+#X floatatom 438 725 0 0 0 0 - - -;
+#X obj 406 856 pack 0 200;
+#X obj 438 703 r window;
+#X obj 217 763 exp;
+#X floatatom 217 785 6 0 0 0 - - -, f 6;
+#X obj 217 855 /;
+#X obj 344 785 * 0.001;
+#X obj 515 952 line~;
+#X obj 515 927 pack 0 200;
+#X floatatom 515 876 0 0 0 0 - - -;
+#X obj 515 850 r delay;
+#X obj 280 976 +~;
+#X obj 217 1000 cos~;
+#X obj 217 1027 *~;
+#X obj 217 1051 +~;
+#X obj 304 909 wrap~;
+#X obj 452 947 *~;
+#X obj 452 977 +~;
+#X obj 389 1001 cos~;
+#X obj 389 1023 *~;
+#X msg 613 614 \; transpose 0 \; window 100 \; delay 0;
+#X obj 613 588 loadbang;
+#X obj 344 812 t b f;
+#X floatatom 217 877 6 0 0 0 - - -, f 6;
+#X obj 304 882 +~ 0.5;
+#X obj 217 950 -~ 0.5;
+#X obj 217 976 *~ 0.5;
+#X obj 389 946 -~ 0.5;
+#X obj 389 979 *~ 0.5;
+#X obj 217 806 - 1;
+#X obj 217 741 * 0.05776;
+#X obj 217 828 * -1;
+#X text 297 740 (halftones);
+#X text 260 779 speed;
+#X text 259 793 change;
+#X text 482 724 <--window (msec);
+#X text 252 848 tape head;
+#X obj 217 908 phasor~;
+#X obj 515 903 max 1.5;
+#X text 518 809 delay;
+#X text 515 827 (msec);
+#X obj 438 747 max 1;
+#X text 253 861 rotation freq;
+#X obj 280 1000 vd~ G09-del;
+#X obj 452 999 vd~ G09-del;
+#X obj 360 625 delwrite~ G09-del 5000;
+#X text 620 720 This is a classic rotating-tape-head style pitch shifter
+using the [vd~] variable delay object. Ther are two moving tape heads
+\, each of which is loudest at the middle of its trajectory \, and
+enveloped out at the moment it has to jump back (or forward) to start
+another scratch. Most of the brain work is in computing how fast the
+tape heads have to move to get the desired transposition.;
+#X text 620 830 The "window size" is the total trajectory of the read
+points in the delay line \, in milliseconds. The delay times are controlled
+by a [phasor~] object. The second delay time \, 180 degrees out of
+phase from the first one \, is computed using the "wrap" object.,
+f 58;
+#X text 620 910 The [cos~] objects compute the fadein and fadeout of
+the two delay line outputs. They each traverse the positive half of
+the cosine waveform (phase -0.25 to +0.25) over the time the phase
+goes from one end to the other., f 58;
+#X obj 110 605 vu 15 120 empty empty -1 -8 0 10 #404040 #000000 1 0
+;
+#X obj 170 575 - 90;
+#X obj 330 415 *~;
+#X floatatom 330 375 5 0 0 0 - - -, f 5;
+#X obj 530 1050 *~ 2;
+#X floatatom 550 1020 5 0 0 0 - - -, f 5;
+#X text 247 720 change pitch;
+#X obj 217 685 r num1;
+#X floatatom 1100 510 5 0 0 0 - - -, f 5;
+#X floatatom 800 280 5 0 0 0 - - -, f 5;
+#X obj 1156 978 *~;
+#X obj 1110 720 vsl 15 128 0.1 10 1 0 empty empty empty 0 -8 0 8 #ffd2d2
+#000000 #000000 0 0;
+#X obj 1111 948 osc~;
+#X obj 1111 905 osc~;
+#X obj 1111 927 *~ 1000;
+#X floatatom 1117 856 5 0 0 0 - - -, f 5;
+#X obj 1150 1170 dac~;
+#X obj 1150 1140 *~;
+#X obj 1230 1130 hsl 128 18 0 1 0 0 empty empty amplitude 4 -13 1 14
+#6c0000 #ffffff #000000 0 0;
+#X text 1261 1204 released under the GNU GPL;
+#X text 1046 1191 (C) Copyright 2006 Hans-Christoph Steiner <hans@at.or.at>
+;
+#X text 1230 1160 ^-- turn up the volume here;
+#X obj 220 1150 *~ 5;
+#X obj 1140 1040 dw;
+#X obj 1200 720 vsl 15 128 0 2 0 0 empty empty empty 0 -9 0 10 #ffa4a4
+#000000 #000000 0 1;
+#X obj 1150 1070 dw;
+#X obj 1300 720 vsl 15 128 0 2 0 0 empty empty empty 0 -9 0 10 #ff3737
+#000000 #000000 0 1;
+#X obj 247 1075 lop~ 8000;
+#X obj 1150 1100 lop~ 8000;
+#X text 810 330 Change pitch;
+#X text 1050 430 change ring modulator rate;
+#X text 1230 860 use truning button to control this;
+#X obj 1100 460 ctlin 22;
+#X obj 830 190 ctlin 23;
+#X obj 920 280 s num1;
+#X floatatom 1200 580 5 0 0 0 - - -, f 5;
+#X obj 1200 530 ctlin 25;
+#X obj 270 180 ctlin 20;
+#X obj 350 180 ctlin 21;
+#X floatatom 270 230 5 0 0 0 - - -, f 5;
+#X floatatom 350 230 5 0 0 0 - - -, f 5;
+#X obj 1210 620 * 0.016;
+#X msg 550 990 4;
+#X obj 830 230 - 63;
+#X obj 1100 630 + 0.1;
+#X obj 220 1110 hip~ 90;
+#X obj 790 250 / 2;
+#X obj 1100 550 - 50;
+#X obj 1100 590 * 0.15;
+#X msg 330 345 1;
+#X text 1160 510 proportion of ring modulator;
+#X text 1320 840 original voice;
+#X text 1320 720 changed voice;
+#X obj 780 350 hsl 128 15 -40 40 0 0 empty empty empty -2 -8 0 10 #ffd2d2
+#000000 #000000 0 1;
+#X text 730 370 low pitch;
+#X text 900 370 high pitch;
+#X obj 320 280 bng 15 250 50 0 empty empty empty 17 7 0 10 #fcfcfc
+#000000 #000000;
+#X text 1040 660 This is a simple ring modulator. It modulates the
+sound after go through the pitch shifter with two Amplitude Modulators
+controlled by the orange sliders. Turn on the DSP \, turn up the volume
+\, and try messing with your voice.;
+#X text 610 280 get voice in;
+#X text 270 140 press any button on the face of microbit to get the
+voice;
+#X text 620 980 pd example project G09.pitchshift;
+#X connect 0 0 61 0;
+#X connect 0 0 63 0;
+#X connect 0 1 61 0;
+#X connect 0 1 63 0;
+#X connect 1 0 60 0;
+#X connect 1 0 3 0;
+#X connect 3 0 2 0;
+#X connect 4 0 3 1;
+#X connect 7 0 40 0;
+#X connect 8 0 21 0;
+#X connect 9 0 8 1;
+#X connect 9 0 26 1;
+#X connect 10 0 51 0;
+#X connect 11 0 9 0;
+#X connect 12 0 10 0;
+#X connect 13 0 14 0;
+#X connect 14 0 39 0;
+#X connect 15 0 33 0;
+#X connect 16 0 32 0;
+#X connect 17 0 21 1;
+#X connect 17 0 27 1;
+#X connect 18 0 17 0;
+#X connect 19 0 48 0;
+#X connect 20 0 19 0;
+#X connect 21 0 53 0;
+#X connect 22 0 23 0;
+#X connect 23 0 24 0;
+#X connect 24 0 86 0;
+#X connect 25 0 26 0;
+#X connect 25 0 37 0;
+#X connect 26 0 27 0;
+#X connect 27 0 54 0;
+#X connect 28 0 29 0;
+#X connect 29 0 24 1;
+#X connect 31 0 30 0;
+#X connect 32 0 15 0;
+#X connect 32 1 15 1;
+#X connect 33 0 47 0;
+#X connect 34 0 25 0;
+#X connect 35 0 36 0;
+#X connect 36 0 22 0;
+#X connect 37 0 38 0;
+#X connect 38 0 28 0;
+#X connect 39 0 41 0;
+#X connect 40 0 13 0;
+#X connect 41 0 15 0;
+#X connect 47 0 8 0;
+#X connect 47 0 35 0;
+#X connect 47 0 34 0;
+#X connect 48 0 18 0;
+#X connect 51 0 16 0;
+#X connect 51 0 11 0;
+#X connect 53 0 23 1;
+#X connect 54 0 29 1;
+#X connect 60 0 59 0;
+#X connect 61 0 1 0;
+#X connect 61 0 55 0;
+#X connect 62 0 61 1;
+#X connect 63 0 84 0;
+#X connect 64 0 63 1;
+#X connect 66 0 7 0;
+#X connect 67 0 106 0;
+#X connect 68 0 112 0;
+#X connect 69 0 82 1;
+#X connect 70 0 72 0;
+#X connect 70 0 74 0;
+#X connect 71 0 69 0;
+#X connect 72 0 73 0;
+#X connect 73 0 71 0;
+#X connect 76 0 75 0;
+#X connect 76 0 75 1;
+#X connect 77 0 76 1;
+#X connect 81 0 69 1;
+#X connect 81 0 82 0;
+#X connect 82 0 84 1;
+#X connect 83 0 82 2;
+#X connect 84 0 87 0;
+#X connect 85 0 84 2;
+#X connect 86 0 104 0;
+#X connect 87 0 76 0;
+#X connect 91 0 67 0;
+#X connect 92 0 102 0;
+#X connect 94 0 100 0;
+#X connect 95 0 94 0;
+#X connect 96 0 98 0;
+#X connect 97 0 99 0;
+#X connect 98 0 115 0;
+#X connect 99 0 115 0;
+#X connect 100 0 83 0;
+#X connect 101 0 64 0;
+#X connect 102 0 93 0;
+#X connect 102 0 105 0;
+#X connect 103 0 70 0;
+#X connect 104 0 81 0;
+#X connect 105 0 68 0;
+#X connect 106 0 107 0;
+#X connect 107 0 103 0;
+#X connect 108 0 62 0;
+#X connect 115 0 108 0;
