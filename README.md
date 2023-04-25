@@ -1,5 +1,12 @@
 # Real-Time-Voice-Changer
+This is an interesting product for changing the tone of human voices. It consists of two main parts, micro-bit as controller and purr-data as digital signal processing engine.
+## Features
 
-In this folder there are three files. the python file is for the microbit to transmit gesture and button pressed information and potentiometer information.
+Real-time control and modulate your voice. Controlling the constant change of the tone, which can be applied in the future in the field of game live broadcasting or gaming to improve entertainment.
+## File description
 
-This is an interesting product for changing the tone of human voices. It consists of two main parts, micro-bit and purr-data, and its most important feature is that it can control the parameters of the tone that you want to change in real time, controlling the constant change of the tone, which can be applied in the future in the field of game live broadcasting or gaming to improve entertainment. In micro-bit, the main control program, and in purr-data, the algorithms for digital signal processing.
+* [Real-Time-Voice-Changer.py](Real-Time-Voice-Changer.py) is for the microbit to transmit gesture and button pressed information and potentiometer information.
+
+* [IAM20230228_final2.pd](IAM20230228_final2.pd) contains the main audio processing module, which includes pitch changes and ring modulator processing of the sound.
+
+* [dw.pd](dw.pd) is a subfile of the [IAM20230228_final2.pd](IAM20230228_final2.pd). Contains the signal path that adjusts the ratio of the two audio paths to the output.
